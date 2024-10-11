@@ -1,0 +1,33 @@
+name: Python application
+
+on:
+  push:
+    branches: [ main ]  # or the branch you want to trigger the workflow on
+  pull_request:
+    branches: [ main ]  # or the branch you want to trigger the workflow on
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.10  # Use the Python version you need
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        make install
+
+    - name: Run application
+      run: |
+        make run &
+        sleep 10
+        
+    - name: Check server response
+      run: |
+        curl -f http://localhost:3000 || exit 1
