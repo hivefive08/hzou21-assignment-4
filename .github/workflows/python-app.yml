@@ -37,5 +37,11 @@ jobs:
 
     - name: Test search functionality
       run: |
-        curl -X POST -d "query=machine learning" -H "Content-Type: application/x-www-form-urlencoded" http://localhost:3000/search
+        # Send a search query and check the server's response
+        response=$(curl -X POST -d "query=machine learning" -H "Content-Type: application/x-www-form-urlencoded" http://localhost:3000/search)
+        
+        # Validate the response contains 5 documents and 5 similarity scores
+        echo $response | jq '.documents | length == 5' || exit 1
+        echo $response | jq '.similarities | length == 5' || exit 1
+    
 
