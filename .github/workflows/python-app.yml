@@ -34,3 +34,8 @@ jobs:
     - name: Check server response
       run: |
         curl -f http://localhost:3000 || exit 1
+
+    - name: Test search functionality
+      run: |
+        curl -X POST -d "query=machine learning" -H "Content-Type: application/x-www-form-urlencoded" http://localhost:3000/search
+
