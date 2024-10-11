@@ -1,6 +1,8 @@
+.PHONY: install run
+
 install:
-	python -m venv venv
-	venv\Scripts\pip install -r requirements.txt
+	python -m pip install --upgrade pip
+	python -m pip install -r requirements.txt
 
 run:
-	venv\Scripts\python -m flask run --host=0.0.0.0 --port=3000
+	FLASK_APP=app.py FLASK_RUN_HOST=localhost FLASK_RUN_PORT=3000 flask run
